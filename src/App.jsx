@@ -1,6 +1,6 @@
 import {Route, Routes } from "react-router-dom";
 /* import Tweet from './components/Tweet'; */
-import Home from './components/Home';
+import Home from './pages/Home';
 import './styles/App.css'
 
 function App() {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import TweetList from './TweetList';
-import TweetForm from './TweetForm';
+import TweetList from '../components/TweetList';
+import TweetForm from '../components/TweetForm';
 
 const Home = () => {
 
