@@ -16,24 +16,22 @@ const Home = () => {
 
     const addTweet = (text) => {
         const newTweet = {
-            id: Date.now(),
+            id:Date.now(),
+            dataTime: Date().toLocaleString(),
             text,
             likes: 0,
+            vews: 0,
+            retweets: 0,
+            comments: 0,
+            shares: 0
         };
         setTweets([newTweet, ...tweets]);
-    };
-
-    const likeTweet = (id) => {
-        setTweets(
-            tweets.map((tweet) =>
-                tweet.id === id ? { ...tweet, likes: tweet.likes + 1 } : tweet)
-        );
     };
 
     return (
         <div>
             <TweetForm onAddTweet={addTweet} />
-            <TweetList tweets={tweets} onLike={likeTweet} />
+            <TweetList tweets={tweets}  />
         </div>
     );
 };

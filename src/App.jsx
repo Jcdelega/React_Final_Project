@@ -1,30 +1,21 @@
 import {Route, Routes } from "react-router-dom";
-/* import Tweet from './components/Tweet'; */
+import Navbar from './components/Navbar'; 
 import Home from './pages/Home';
+import Profile from './components/Profile';
+import NotFound from './pages/NotFound';
 import './styles/App.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
 
   return (
     <>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/profile" element={<Profile />} />  */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
-      {/* <div className="container mt-5">
-        <Tweet
-          profileImage="https://i.pravatar.cc/100"
-          name="J.C. Delega"
-          username="jcdelega"
-          publication="Desarrollando nuevas ideas con React ⚛️🚀"
-          timestamp="17 de junio de 2025 - 12:00 PM"
-          initialViews={150}
-          initialLikes={12}
-          initialRetweets={4}
-          initialComments={1}
-          initialShares={0}
-        />
-      </div> */}
     </>
   )
 }
