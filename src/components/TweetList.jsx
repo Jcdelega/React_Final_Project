@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
+import { AnimatePresence, motion } from 'framer-motion';
 import Tweet from "./Tweet";
-import { AnimatePresence, motion} from 'framer-motion';
 
 const TweetList = ({ tweets }) => {
     const [query, setQuery] = useState('');
@@ -8,20 +8,21 @@ const TweetList = ({ tweets }) => {
 
     const processedTweets = useMemo(() => {
         const filtered = tweets.filter((t) =>
-            [t.text, t.user].some((field) => field.toLowerCase().includes(query.toLowerCase()))
+            [t.text].some((field) => field.toLowerCase().includes(query.toLowerCase()))
         );
         return filtered.sort((a, b) => {
             switch (sortBy) {
                 case 'newest':
-                    return b.timestamp - a.timestamp;
+                    return b.dataTime - a.dataTime;
                 case 'oldest':
-                    return a.timestamp - b.timestamp;
+                    return a.dataTime - b.dataTime;
                 case 'popular':
                     return b.likes + b.retweets - (a.likes + a.retweets);
                 default:
                     return 0;
             }
         });
+
     }, [tweets, query, sortBy]);
 
     return (
@@ -31,7 +32,7 @@ const TweetList = ({ tweets }) => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search tweets"
-                    className="w-100 px-4 py-2 border rounded-pill bg-white"
+                    className="text-black w-100 px-4 py-2 border rounded-pill bg-white"
                 />
                 <div className="d-flex py-2 justify-content-between">
                     <select

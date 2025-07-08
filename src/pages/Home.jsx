@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import TweetList from '../components/TweetList';
 import TweetForm from '../components/TweetForm';
 
@@ -28,10 +28,26 @@ const Home = () => {
         setTweets([newTweet, ...tweets]);
     };
 
+    const likeHandler = useCallback((id, isLiking) => {
+        setTweets((prev) =>
+        prev.map((t) =>
+            t.id === id ? { ...t, likes: Math.max(0, t.likes + (isLiking ? 1 : -1)) } : t
+        )
+        );
+    }, []);
+
+    const retweetHandler = useCallback((id, isRetweeting) => {
+        setTweets((prev) =>
+        prev.map((t) =>
+            t.id === id ? { ...t, retweets: Math.max(0, t.retweets + (isRetweeting ? 1 : -1)) } : t
+        )
+        );
+    }, []);
+
     return (
         <div>
             <TweetForm onAddTweet={addTweet} />
-            <TweetList tweets={tweets}  />
+            <TweetList tweets={tweets}/>
         </div>
     );
 };
