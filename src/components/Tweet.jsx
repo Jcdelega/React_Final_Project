@@ -19,7 +19,7 @@ const Tweet = ({
     const [shares, setShares] = useState(initialShares || 0);
 
     return (
-        <div className="card shadow-sm my-3" style={{ maxWidth: '600px' }}>
+        <div className="card shadow-sm mb-3" style={{ maxWidth: '600px' }}>
             <div className="card-body">
                 {/* Profile Header */}
                 <div className="d-flex align-items-center mb-2">

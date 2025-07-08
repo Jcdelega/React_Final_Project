@@ -1,9 +1,53 @@
+import { useState, useMemo } from "react";
 import Tweet from "./Tweet";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion} from 'framer-motion';
 
 const TweetList = ({ tweets }) => {
+    const [query, setQuery] = useState('');
+    const [sortBy, setSortBy] = useState('newest');
+
+    const processedTweets = useMemo(() => {
+        const filtered = tweets.filter((t) =>
+            [t.text, t.user].some((field) => field.toLowerCase().includes(query.toLowerCase()))
+        );
+        return filtered.sort((a, b) => {
+            switch (sortBy) {
+                case 'newest':
+                    return b.timestamp - a.timestamp;
+                case 'oldest':
+                    return a.timestamp - b.timestamp;
+                case 'popular':
+                    return b.likes + b.retweets - (a.likes + a.retweets);
+                default:
+                    return 0;
+            }
+        });
+    }, [tweets, query, sortBy]);
+
     return (
         <div>
+            <div className="border-b border-gray-200 p-4 bg-white space-y-3">
+                <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search tweets"
+                    className="w-100 px-4 py-2 border rounded-pill bg-white"
+                />
+                <div className="d-flex py-2 justify-content-between">
+                    <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="px-3 py-1 border rounded-pill bg-white text-black"
+                    >
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                    <span className="px-3 py-1 bg-body-secondary rounded-pill border">
+                        {processedTweets.length} tweet{processedTweets.length !== 1 ? 's' : ''}
+                    </span>
+                </div>
+            </div>
             <AnimatePresence>
                 {tweets.map((tweet) => (
                     <motion.div key={tweet.id} exit={{ opacity: 1 }} layout>
